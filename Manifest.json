@@ -1,1 +1,11 @@
 
+{
+  "name": "Window Quoter",
+  "short_name": "Quoter",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "description": "Count window panes and generate quotes for window cleaning.",
+  "icons": [],
+  "theme_color": "#ffffff"
+}
