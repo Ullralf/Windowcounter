@@ -1,1 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Window Quoter PWA</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="manifest" href="manifest.json"/>
+</head>
+<body>
+  <h1>🪟 Window Quoter</h1>
+
+  <form id="quoteForm">
+    <input type="text" id="clientName" placeholder="Client Name" required />
+    <input type="text" id="address" placeholder="Address" required />
+
+    <div id="paneTypes"></div>
+    <button type="button" onclick="addPaneType()">+ Add Window Type</button>
+
+    <p><strong>Total Panes:</strong> <span id="totalPanes">0</span></p>
+    <p><strong>Estimated Price:</strong> $<span id="totalPrice">0</span></p>
+
+    <button type="submit">📤 Send to Google Sheets</button>
+  </form>
+
+  <script src="app.js"></script>
+</body>
+</html>
 
