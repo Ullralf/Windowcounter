@@ -3,27 +3,111 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Window Quoter PWA</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="manifest" href="manifest.json"/>
+  <title>Window Quote Counter</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f2f2f2;
+    }
+    h1 {
+      text-align: center;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .button-area {
+      flex: 1;
+      height: 100%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    .left {
+      background-color: #ffe0e0;
+      border-right: 1px solid #ccc;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+    .right {
+      background-color: #e0ffe0;
+      border-left: 1px solid #ccc;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+    .label {
+      flex: 2;
+      text-align: center;
+      font-weight: bold;
+    }
+    .count {
+      width: 30px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <h1>🪟 Window Quoter</h1>
+  <h1>Window Quote Counter</h1>
+  <div id="items-container"></div>
 
-  <form id="quoteForm">
-    <input type="text" id="clientName" placeholder="Client Name" required />
-    <input type="text" id="address" placeholder="Address" required />
+  <script>
+    const items = [
+      'Small', 'Medium', 'Large',
+      'Fly screen', 'Fly screen door',
+      'Balustrade', 'Louvre', 'Skylight'
+    ];
 
-    <div id="paneTypes"></div>
-    <button type="button" onclick="addPaneType()">+ Add Window Type</button>
+    const counts = {};
+    const container = document.getElementById('items-container');
 
-    <p><strong>Total Panes:</strong> <span id="totalPanes">0</span></p>
-    <p><strong>Estimated Price:</strong> $<span id="totalPrice">0</span></p>
+    items.forEach(item => {
+      counts[item] = 0;
 
-    <button type="submit">📤 Send to Google Sheets</button>
-  </form>
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'item';
 
-  <script src="app.js"></script>
+      const left = document.createElement('div');
+      left.className = 'button-area left';
+      left.innerText = '−';
+      left.onclick = () => {
+        if (counts[item] > 0) {
+          counts[item]--;
+          update();
+        }
+      };
+
+      const label = document.createElement('div');
+      label.className = 'label';
+      label.innerHTML = `${item} <span class="count" id="count-${item}">0</span>`;
+
+      const right = document.createElement('div');
+      right.className = 'button-area right';
+      right.innerText = '+';
+      right.onclick = () => {
+        counts[item]++;
+        update();
+      };
+
+      itemDiv.appendChild(left);
+      itemDiv.appendChild(label);
+      itemDiv.appendChild(right);
+      container.appendChild(itemDiv);
+    });
+
+    function update() {
+      items.forEach(item => {
+        document.getElementById(`count-${item}`).innerText = counts[item];
+      });
+    }
+  </script>
 </body>
 </html>
-
