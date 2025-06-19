@@ -8,74 +8,71 @@
     body {
       font-family: sans-serif;
       margin: 0;
-      padding: 0;
-      background: #f5f5f5;
+      background: #f0f0f0;
     }
 
     h1 {
       text-align: center;
       font-size: 2rem;
-      padding: 20px;
+      padding: 16px;
       background: #1976d2;
       color: white;
-      margin: 0;
     }
 
     .item {
       display: flex;
-      width: 100%;
-      margin: 10px 0;
+      align-items: center;
+      justify-content: space-between;
+      background: white;
+      margin: 10px;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    .button-area {
-      flex: 1;
-      padding: 40px 0;
-      font-size: 2rem;
-      font-weight: bold;
+    .label {
+      font-size: 1.4rem;
+      flex: 2;
+    }
+
+    .count {
+      font-size: 1.8rem;
+      color: #1976d2;
+      margin-left: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .btn {
+      background: #e0e0e0;
+      border: none;
+      padding: 16px 20px;
+      font-size: 1.5rem;
+      border-radius: 10px;
+      min-width: 60px;
       text-align: center;
       user-select: none;
     }
 
-    .left {
-      background-color: #ffdddd;
-      border-right: 2px solid white;
-      border-top-left-radius: 10px;
-      border-bottom-left-radius: 10px;
+    .btn:active {
+      background: #ccc;
     }
 
-    .label {
-      flex: 2;
-      background-color: #ffffff;
-      font-size: 1.8rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 10px;
+    .btn.add {
+      background-color: #c8f7c5;
     }
 
-    .count {
-      font-size: 2.5rem;
-      color: #1976d2;
-      margin-top: 10px;
-    }
-
-    .right {
-      background-color: #ddffdd;
-      border-left: 2px solid white;
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
-    }
-
-    @media (hover: hover) {
-      .button-area:hover {
-        opacity: 0.8;
-      }
+    .btn.subtract {
+      background-color: #f7c5c5;
     }
   </style>
 </head>
 <body>
-  <h1>Window Quote Counter</h1>
+  <h1>Window Quote</h1>
   <div id="items-container"></div>
 
   <script>
@@ -94,31 +91,36 @@
       const itemDiv = document.createElement('div');
       itemDiv.className = 'item';
 
-      const left = document.createElement('div');
-      left.className = 'button-area left';
-      left.innerText = '−';
-      left.onclick = () => {
+      const label = document.createElement('div');
+      label.className = 'label';
+      label.innerHTML = `${item} <span class="count" id="count-${item}">0</span>`;
+
+      const buttons = document.createElement('div');
+      buttons.className = 'buttons';
+
+      const subtractBtn = document.createElement('button');
+      subtractBtn.className = 'btn subtract';
+      subtractBtn.textContent = '−';
+      subtractBtn.onclick = () => {
         if (counts[item] > 0) {
           counts[item]--;
           update();
         }
       };
 
-      const label = document.createElement('div');
-      label.className = 'label';
-      label.innerHTML = `${item}<span class="count" id="count-${item}">0</span>`;
-
-      const right = document.createElement('div');
-      right.className = 'button-area right';
-      right.innerText = '+';
-      right.onclick = () => {
+      const addBtn = document.createElement('button');
+      addBtn.className = 'btn add';
+      addBtn.textContent = '+';
+      addBtn.onclick = () => {
         counts[item]++;
         update();
       };
 
-      itemDiv.appendChild(left);
+      buttons.appendChild(addBtn);
+      buttons.appendChild(subtractBtn);
+
       itemDiv.appendChild(label);
-      itemDiv.appendChild(right);
+      itemDiv.appendChild(buttons);
       container.appendChild(itemDiv);
     });
 
